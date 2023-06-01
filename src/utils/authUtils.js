@@ -1,29 +1,15 @@
 export const getUser = async token => {
-  try {
-    // Implement the logic to get the user info after sending the token in the authorization header
-    const user = {};
-    return user;
-  } catch (error) {
-    throw error;
-  }
+  // Implement the logic to get the user info after sending the token in the authorization header
+  const user = { firstName: 'Jorge', lastName: 'Paul' };
+  return user;
 };
 
 export const registerUser = async formData => {
-  try {
-    // Implement the logic to get a token after signup
-    const token = 'this should be a real token';
-    return token;
-  } catch (error) {
-    throw error;
-  }
+  // Implement the logic to get a token after signup
+  return { token: '12345' };
 };
 
 export const loginUser = async formData => {
-  try {
-    // Implement the logic to get a token after login
-    const token = 'this should be a real token';
-    return token;
-  } catch (error) {
-    throw error;
-  }
+  // Implement the logic to get a token after login
+  return { token: '12345' };
 };

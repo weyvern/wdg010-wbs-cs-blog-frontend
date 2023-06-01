@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import NavBar from './components/NavBar';
 import GlobalLayout from './components/GlobalLayout';
@@ -7,7 +7,6 @@ import Login from './components/Login';
 import Register from './components/Register';
 import SinglePost from './components/SinglePost';
 import CreatePost from './components/CreatePost';
-import ProtectedLayout from './components/ProtectedLayout';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
@@ -21,7 +20,7 @@ const App = () => {
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
           <Route path='posts/:id' element={<SinglePost />} />
-          <Route path='secret' element={<ProtectedLayout />}>
+          <Route path='secret' element={<Outlet />}>
             <Route path='create' element={<CreatePost />} />
           </Route>
         </Route>

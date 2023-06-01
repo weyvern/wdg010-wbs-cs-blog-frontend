@@ -1,13 +1,25 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const NavBar = () => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handler = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+
+    return () => {
+      window.removeEventListener('resize', handler);
+    };
+  }, []);
+
   return (
     <nav className='navbar navbar-expand-sm navbar-dark bg-light'>
       <div className='container-fluid'>
         <Link to='/' className='navbar-brand'>
-          Dear diary
+          City Diary
           <span role='img' aria-label='book'>
-            📖
+            📖🥰
           </span>
         </Link>
         <button
@@ -22,34 +34,29 @@ const NavBar = () => {
           <span className='navbar-toggler-icon'></span>
         </button>
         <div className='collapse navbar-collapse' id='navbarNav'>
-          <ul className='navbar-nav ms-auto mb-2 mb-lg-0'>
+          <ul
+            className='navbar-nav ms-auto mb-lg-0 align-items-center'
+            {...(() => windowWidth < 576 && { 'data-bs-toggle': 'collapse', 'data-bs-target': '#navbarNav' })()}
+          >
             <li className='nav-item'>
               <Link to='/login' className='nav-link'>
-                <span data-bs-target='#navbarNav' data-bs-toggle='collapse'>
-                  Login
-                </span>
+                <span>Login</span>
               </Link>
             </li>
             <li className='nav-item'>
               <Link to='/register' className='nav-link'>
-                <span data-bs-target='#navbarNav' data-bs-toggle='collapse'>
-                  Register
-                </span>
+                <span>Register</span>
               </Link>
             </li>
             <li className='nav-item'>
               <Link to='/secret/create' className='nav-link'>
-                <span data-bs-target='#navbarNav' data-bs-toggle='collapse'>
-                  Create post
-                </span>
+                <span>Create post</span>
               </Link>
             </li>
             <li className='nav-item'>
-              <p className='nav-link' style={{ cursor: 'pointer' }}>
-                <span data-bs-target='#navbarNav' data-bs-toggle='collapse'>
-                  Logout
-                </span>
-              </p>
+              <span className='nav-link' style={{ cursor: 'pointer' }}>
+                <span>Logout</span>
+              </span>
             </li>
           </ul>
         </div>
