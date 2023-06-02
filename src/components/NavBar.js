@@ -1,17 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import useWidth from '../utils/useWidth';
 
 const NavBar = ({ isAuthenticated, user, logOut }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handler = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handler);
-
-    return () => {
-      window.removeEventListener('resize', handler);
-    };
-  }, []);
+  const windowWidth = useWidth();
+  const collapse = useMemo(() => windowWidth < 576 && { 'data-bs-toggle': 'collapse', 'data-bs-target': '#navbarNav' }, [windowWidth]);
 
   return (
     <nav className='navbar navbar-expand-sm navbar-dark bg-light'>
@@ -34,10 +27,7 @@ const NavBar = ({ isAuthenticated, user, logOut }) => {
           <span className='navbar-toggler-icon'></span>
         </button>
         <div className='collapse navbar-collapse' id='navbarNav'>
-          <ul
-            className='navbar-nav ms-auto mb-lg-0 align-items-center'
-            {...(() => windowWidth < 576 && { 'data-bs-toggle': 'collapse', 'data-bs-target': '#navbarNav' })()}
-          >
+          <ul className='navbar-nav ms-auto mb-lg-0 align-items-center' {...collapse}>
             {!isAuthenticated ? (
               <>
                 <li className='nav-item'>
