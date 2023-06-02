@@ -21,7 +21,7 @@ const SinglePost = () => {
   }, [id]);
 
   const getStyle = useMemo(
-    () => (windowWidth < 1000 ? { maxWidth: '100%', height: 'auto' } : { maxHeight: '500px', marginX: 'auto' }),
+    () => (windowWidth < 1000 ? { maxWidth: '100%', height: 'auto' } : { maxHeight: '500px', maxWidth: '100%' }),
     [windowWidth]
   );
 
