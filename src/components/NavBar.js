@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const NavBar = () => {
+const NavBar = ({ isAuthenticated, user, logOut }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -38,26 +38,42 @@ const NavBar = () => {
             className='navbar-nav ms-auto mb-lg-0 align-items-center'
             {...(() => windowWidth < 576 && { 'data-bs-toggle': 'collapse', 'data-bs-target': '#navbarNav' })()}
           >
-            <li className='nav-item'>
-              <Link to='/login' className='nav-link'>
-                <span>Login</span>
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link to='/register' className='nav-link'>
-                <span>Register</span>
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link to='/secret/create' className='nav-link'>
-                <span>Create post</span>
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <span className='nav-link' style={{ cursor: 'pointer' }}>
-                <span>Logout</span>
-              </span>
-            </li>
+            {!isAuthenticated ? (
+              <>
+                <li className='nav-item'>
+                  <Link to='/login' className='nav-link'>
+                    <span>Login</span>
+                  </Link>
+                </li>
+                <li className='nav-item'>
+                  <Link to='/register' className='nav-link'>
+                    <span>Register</span>
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                {user && (
+                  <li className='nav-item'>
+                    <span className='nav-link'>
+                      <span>
+                        Welcome back, {user.firstName} {user.lastName}
+                      </span>
+                    </span>
+                  </li>
+                )}
+                <li className='nav-item'>
+                  <Link to='/secret/create' className='nav-link'>
+                    <span>Create post</span>
+                  </Link>
+                </li>
+                <li className='nav-item' onClick={logOut}>
+                  <span className='nav-link' style={{ cursor: 'pointer' }}>
+                    <span>Logout</span>
+                  </span>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

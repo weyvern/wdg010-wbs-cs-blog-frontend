@@ -11,10 +11,18 @@ export const getPost = async id => {
 };
 
 export const createPost = async ({ title, image, body }) => {
-  const { data } = await axios.post(`${process.env.REACT_APP_BLOG_API}/posts`, {
-    title,
-    image,
-    body
-  });
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_BLOG_API}/posts`,
+    {
+      title,
+      image,
+      body
+    },
+    {
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    }
+  );
   return data;
 };
