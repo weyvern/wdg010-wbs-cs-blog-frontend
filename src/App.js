@@ -12,6 +12,7 @@ import CreatePost from './components/CreatePost';
 import { toast } from 'react-toastify';
 import { getUser } from './utils/authUtils';
 import 'react-toastify/dist/ReactToastify.css';
+import Loader from './components/Loader';
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
@@ -48,39 +49,43 @@ const App = () => {
     <>
       <ToastContainer />
       <NavBar isAuthenticated={isAuthenticated} user={user} logOut={logOut} />
-      <Routes>
-        <Route path='/' element={<GlobalLayout />}>
-          <Route index element={<Home />} />
-          <Route
-            path='login'
-            element={
-              <Login
-                isAuthenticated={isAuthenticated}
-                setIsAuthenticated={setIsAuthenticated}
-                loading={loading}
-                setLoading={setLoading}
-                setToken={setToken}
-              />
-            }
-          />
-          <Route
-            path='register'
-            element={
-              <Register
-                isAuthenticated={isAuthenticated}
-                setIsAuthenticated={setIsAuthenticated}
-                loading={loading}
-                setLoading={setLoading}
-                setToken={setToken}
-              />
-            }
-          />
-          <Route path='posts/:id' element={<SinglePost />} />
-          <Route path='secret' element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
-            <Route path='create' element={<CreatePost />} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <Routes>
+          <Route path='/' element={<GlobalLayout />}>
+            <Route index element={<Home />} />
+            <Route
+              path='login'
+              element={
+                <Login
+                  isAuthenticated={isAuthenticated}
+                  setIsAuthenticated={setIsAuthenticated}
+                  loading={loading}
+                  setLoading={setLoading}
+                  setToken={setToken}
+                />
+              }
+            />
+            <Route
+              path='register'
+              element={
+                <Register
+                  isAuthenticated={isAuthenticated}
+                  setIsAuthenticated={setIsAuthenticated}
+                  loading={loading}
+                  setLoading={setLoading}
+                  setToken={setToken}
+                />
+              }
+            />
+            <Route path='posts/:id' element={<SinglePost />} />
+            <Route path='secret' element={<ProtectedLayout isAuthenticated={isAuthenticated} />}>
+              <Route path='create' element={<CreatePost />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      )}
     </>
   );
 };
